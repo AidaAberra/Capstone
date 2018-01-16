@@ -47,7 +47,7 @@ void loop() {
     //shiftColumn(false);                         //with SR clks tied, latched outputs are one clock behind
     for (int j = 0; j < COLUMN_COUNT; j++)
     {
-      //setColumn(j);
+      setColumn(j);
       int raw_reading = analogRead(zOutput);
       byte send_reading = (byte) (lowByte(raw_reading >> 2));
       //shiftColumn(false);
