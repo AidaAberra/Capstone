@@ -20,6 +20,7 @@ const int FSR_PIN = A0; // Pin connected to FSR/resistor divider
 // their value's below:
 const float VCC = 4.98; // Measured voltage of Ardunio 5V line
 const float R_DIV = 3230.0; // Measured resistance of 3.3k resistor
+int cnt = 0;
 
 void setup() 
 {
@@ -43,13 +44,19 @@ void loop()
     // Guesstimate force based on slopes in figure 3 of
     // FSR datasheet:
     float force;
+    float forceN; //force in N
     float fsrG = 1.0 / fsrR; // Calculate conductance
     // Break parabolic curve down into two linear slopes:
     if (fsrR <= 600) 
       force = (fsrG - 0.00075) / 0.00000032639;
+     
     else
       force =  fsrG / 0.000000642857;
-    Serial.println("Force: " + String(force) + " g");
+    forceN = force/101.97;
+    if (forceN >=0.37)
+        cnt++;
+    Serial.println("Force: " + String(forceN) + " N");
+    Serial.println("Kick count: "+ String(cnt));
     Serial.println();
 
     delay(500);
